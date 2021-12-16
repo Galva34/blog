@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+    <div>
+        {% if name is defined %}
+            <h1>
+                Bonjour {{ name }}
+            </h1>
+        {% endif %}
+        {% if identification is defined and identification is not empty %}
+            <h1>
+               Contact actuel:
+
+               <li> Id : {{ identification.id }} </li>
+               <li> Nom : {{ identification.nom }} </li>
+               <li> Prénom : {{ identification.prenom }} </li>
+
+               {% if identification.newsletter == true %}
+               <li> Newsletter : Abonné </li>
+
+               {% elseif identification.newsletter == false %}
+               <li> Newsletter : Non Abonné </li>
+               {% endif %}
+            </h1>
+
+        {% endif %}
+        {{ dump(contact) }}
+        <ul>
+            {% for contact in contact %}
+                <li><a href="{{ path('identification', {id:contact.id}) }}">La personne {{ contact.nom }}, {{ contact.prenom }} vous a demandé quelque chose</li>
+            {% endfor %}
+        </ul>
+
+        {% if city is defined and city is not empty %}
+            <p>
+                Vous êtes sur la ville de {{ city }}
+            </p>
+        {% endif %}
+        {{ form(form) }}
+    </div>
+{% endblock %}
